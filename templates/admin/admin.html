@@ -1,0 +1,39 @@
+
+{% extends 'admin/master.html' %}
+{% import 'admin/lib.html' as lib with context %}
+
+{% block body %}
+<div class="container">
+  <h2>Reminders Administration</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Session ID</th>
+        <th>Medicine</th>
+        <th>Times</th>
+        <th>Animal</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for session_id, reminder in reminder_data.items() %}
+      <tr>
+        <td>{{ session_id }}</td>
+        <td>{{ reminder.medicine }}</td>
+        <td>{{ reminder.time | join(', ') }}</td>
+        <td>{{ reminder.animal }}</td>
+        <td>{{ reminder.start_date }}</td>
+        <td>{{ reminder.end_date }}</td>
+        <td>
+          <form action="{{ url_for('reminderview.delete_reminder', session_id=session_id) }}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
